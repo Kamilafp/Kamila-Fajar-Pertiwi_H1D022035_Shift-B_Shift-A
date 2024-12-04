@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+    <ion-title style="font-family: 'Times New Roman', serif;">Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background-color: #F5ECE3;">
+  <ion-header collapse="condense">
+    <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+      <ion-title size="large" style="font-family: 'Times New Roman', serif;">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <h2 style="font-family: 'Times New Roman', serif; color: #F0E6D2;">
+          ✨ Selamat Datang!
+        </h2>
+        <p style="font-family: 'Georgia', serif; color: #F0E6D2;">
+          Silakan login untuk melanjutkan.
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Input Username -->
+    <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px; margin-bottom: 16px;">
+      <ion-label position="floating" style="font-family: 'Georgia', serif; color: #5A4033;">Username</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="username"
+        required="required"
+        style="font-family: 'Georgia', serif; color: #5A4033;">
+      </ion-input>
+    </ion-item>
+
+    <!-- Input Password -->
+    <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px; margin-bottom: 16px;">
+      <ion-label position="floating" style="font-family: 'Georgia', serif; color: #5A4033;">Password</ion-label>
+      <ion-input
+        type="password"
+        [(ngModel)]="password"
+        required="required"
+        style="font-family: 'Georgia', serif; color: #5A4033;">
+      </ion-input>
+    </ion-item>
+
+    <!-- Tombol Login -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          expand="block"
+          color="success"
+          (click)="login()"
+          style="background-color: #A6765B; color: #F8F4EF; border-radius: 6px; font-family: 'Georgia', serif;">
+          Login
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

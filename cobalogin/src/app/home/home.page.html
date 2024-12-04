@@ -1,0 +1,157 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+    <ion-title>
+      📜 Daftar Resep
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" style="color: #F0E6D2;">
+        <ion-icon slot="start" ios="exit-outline" md="exit-sharp"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background-color: #F5ECE3;">
+  <ion-header collapse="condense">
+    <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+      <ion-title size="large">📜 Daftar Resep</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col size="12" class="welcome-text">
+        <h2 style="font-family: 'Times New Roman', serif; color: #F0E6D2;">
+          ✨ Selamat datang, {{ nama }}!
+        </h2>
+        <p style="font-family: 'Georgia', serif; color: #F0E6D2;">
+          Berikut adalah daftar resep-resep kami:
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Menampilkan List Resep -->
+    <ion-row *ngFor="let item of dataResep">
+      <ion-col size="12">
+        <ion-card style="background-color: #F8F4EF; border: 1px solid #6F4E37; border-radius: 12px;">
+          <ion-card-header>
+            <ion-card-title style="font-family: 'Georgia', serif; color: #5A4033; font-size: 1.2em;">
+              {{ item.nama_makanan }}
+              <ion-badge color="warning" slot="end" style="font-family: 'Times New Roman', serif;">
+                Resep
+              </ion-badge>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p style="font-family: 'Georgia', serif; color: #6F4E37;">{{ item.langkah }}</p>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button expand="block" color="tertiary" (click)="openModalEdit(true, item.id)" 
+                  style="background-color: #D9B382; color: #402A20; border-radius: 6px; font-family: 'Georgia', serif;">
+                  Edit
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button expand="block" color="danger" (click)="confirmDelete(item.id)" 
+                  style="background-color: #8B3E2F; color: #F8F4EF; border-radius: 6px; font-family: 'Georgia', serif;">
+                  Hapus
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-button color="success" (click)="openModalTambah(true)" 
+          style="background-color: #A6765B; color: #F8F4EF; border-radius: 6px; font-family: 'Georgia', serif;">
+          Tambah Resep
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal [isOpen]="modalTambah" (ionModalDidDismiss)="cancel()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+          <ion-title>Tambah Resep</ion-title>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()" style="color: #F0E6D2;">Batal</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" style="background-color: #F5ECE3;">
+        <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px;">
+          <ion-input
+            label="Nama Resep"
+            labelPlacement="floating"
+            required
+            [(ngModel)]="nama_makanan"
+            placeholder="Masukkan Nama Resep"
+            style="font-family: 'Georgia', serif; color: #5A4033;">
+          </ion-input>
+        </ion-item>
+        <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px;">
+          <ion-textarea
+            label="Langkah Pembuatan"
+            labelPlacement="floating"
+            required
+            [(ngModel)]="langkah"
+            placeholder="Masukkan Langkah Pembuatan"
+            autoGrow="true"
+            style="font-family: 'Georgia', serif; color: #5A4033;">
+          </ion-textarea>
+        </ion-item>
+        <ion-button expand="block" color="success" (click)="tambahResep()" 
+          style="background-color: #A6765B; color: #F8F4EF; border-radius: 6px; font-family: 'Georgia', serif;">
+          Simpan Resep
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal for Editing a Recipe -->
+  <ion-modal [isOpen]="modalEdit" (ionModalDidDismiss)="cancel()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar style="background-color: #5A4033; color: #F0E6D2;">
+          <ion-title>Edit Resep</ion-title>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()" style="color: #F0E6D2;">Batal</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" style="background-color: #F5ECE3;">
+        <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px;">
+          <ion-input
+            label="Nama Resep"
+            labelPlacement="floating"
+            required
+            [(ngModel)]="nama_makanan"
+            placeholder="Masukkan Nama Resep"
+            style="font-family: 'Georgia', serif; color: #5A4033;">
+          </ion-input>
+        </ion-item>
+        <ion-item style="--background: #F8F4EF; border: 1px solid #D9B382; border-radius: 8px;">
+          <ion-textarea
+            label="Langkah Pembuatan"
+            labelPlacement="floating"
+            required
+            [(ngModel)]="langkah"
+            placeholder="Masukkan Langkah Pembuatan"
+            autoGrow="true"
+            style="font-family: 'Georgia', serif; color: #5A4033;">
+          </ion-textarea>
+        </ion-item>
+        <ion-button expand="block" color="tertiary" (click)="editResep()" 
+          style="background-color: #D9B382; color: #402A20; border-radius: 6px; font-family: 'Georgia', serif;">
+          Simpan Perubahan
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
